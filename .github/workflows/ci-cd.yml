@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  AWS_REGION: us-east-1
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git clone the repository
+        uses: actions/checkout@v4
+      - name: install node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: install dependencies
+        run: npm install
+      - name: build project
+        run: npm run build
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: ./build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./build
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::023022138729:role/GitHubActionsRole-TemperatureMap
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      - name: aws who am i
+        run: aws sts get-caller-identity
+      - name: deploy to s3
+        run: aws s3 sync ./build/ s3://temperature-map-website --delete
