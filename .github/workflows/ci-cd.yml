@@ -51,4 +51,4 @@ jobs:
       - name: aws who am i
         run: aws sts get-caller-identity
       - name: deploy to s3
-        run: aws s3 sync ./build/ s3://temperature-map-static-site --delete
+        run: aws s3 sync ./build/ s3://temperature-map --delete
