@@ -49,4 +49,4 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
       - name: deploy to s3
-        run: aws s3 sync ./build/ s3://www.temperature-map.com --delete
+        run: aws s3 sync ./build/ s3://temperature-map.com --delete
