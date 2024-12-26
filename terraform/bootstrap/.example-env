@@ -1,0 +1,4 @@
+AWS_PROFILE=my-aws-profile-name
+RESOURCE_REGION=region-for-resource-creation
+BUCKET_NAME=bucket-name-for-terraform-state
+DYNAMODB_TABLE_NAME=table-name-for-terraform-state-lock
