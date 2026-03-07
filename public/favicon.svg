@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- dark background -->
+  <rect width="32" height="32" rx="4" fill="#111827"/>
+  <!-- Row 0 (top / cool north) -->
+  <rect x="2" y="2" width="6" height="6" rx="1" fill="#2166ac"/>
+  <rect x="10" y="2" width="6" height="6" rx="1" fill="#4393c3"/>
+  <rect x="18" y="2" width="6" height="6" rx="1" fill="#74add1"/>
+  <rect x="26" y="2" width="6" height="6" rx="1" fill="#abd9e9"/>
+  <!-- Row 1 -->
+  <rect x="2" y="10" width="6" height="6" rx="1" fill="#74add1"/>
+  <rect x="10" y="10" width="6" height="6" rx="1" fill="#abd9e9"/>
+  <rect x="18" y="10" width="6" height="6" rx="1" fill="#fee090"/>
+  <rect x="26" y="10" width="6" height="6" rx="1" fill="#fdae61"/>
+  <!-- Row 2 -->
+  <rect x="2" y="18" width="6" height="6" rx="1" fill="#fdae61"/>
+  <rect x="10" y="18" width="6" height="6" rx="1" fill="#f46d43"/>
+  <rect x="18" y="18" width="6" height="6" rx="1" fill="#d73027"/>
+  <rect x="26" y="18" width="6" height="6" rx="1" fill="#bd0026"/>
+  <!-- Row 3 (bottom / warm south) -->
+  <rect x="2" y="26" width="6" height="6" rx="1" fill="#f46d43"/>
+  <rect x="10" y="26" width="6" height="6" rx="1" fill="#d73027"/>
+  <rect x="18" y="26" width="6" height="6" rx="1" fill="#bd0026"/>
+  <rect x="26" y="26" width="6" height="6" rx="1" fill="#800026"/>
+</svg>

@@ -1,0 +1,56 @@
+/* Shared card patterns — compose these into component CSS modules */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.infoIcon {
+  margin-left: 0.5em;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  cursor: default;
+  position: relative;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  vertical-align: text-top;
+}
+
+.infoIcon:hover {
+  color: var(--color-text-hover);
+}
+
+.infoIcon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-tooltip);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: var(--z-tooltip);
+}
+
+.infoIcon:hover::after {
+  opacity: 1;
+}

@@ -1,13 +1,56 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Design tokens */
+:root {
+  /* Backgrounds */
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #0f0f1e;
+
+  /* Accent */
+  --color-accent: #7eb8f7;
+  --color-accent-hover: #a8d0fb;
+  --color-accent-subtle: rgba(126, 184, 247, 0.1);
+
+  /* Text */
+  --color-text-primary: #ccc;
+  --color-text-secondary: #888;
+  --color-text-muted: #777;
+  --color-text-hover: #bbb;
+  --color-text-tooltip: #aaa;
+
+  /* Borders / surfaces */
+  --color-border: #333;
+  --color-surface: #444;
+  --color-disabled: #555;
+
+  /* Semantic */
+  --color-error: #f4a261;
+  --color-white: #fff;
+
+  /* Z-index scale */
+  --z-sidebar: 10;
+  --z-tooltip: 20;
+  --z-modal: 100;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Global reset for full-bleed map layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg-primary);
 }

@@ -1,0 +1,19 @@
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ramp {
+  height: 0.375rem;
+  border-radius: 0.125rem;
+  /* Placeholder gradient — replaced in Phase 4 with generated colormap */
+  background: linear-gradient(to right, #2166ac, #f7f7f7, #d6604d);
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}

@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# temperature-map
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A single-page web application that visualizes 100+ years of NOAA nClimGrid monthly land surface temperature data (average temperature) over CONUS. Live at [temperature-map.com](https://temperature-map.com).
 
-## Available Scripts
+## Architecture
 
-In the project directory, you can run:
+Static SPA (React + Vite + TypeScript) served via CloudFront + S3. No backend.
 
-### `npm start`
+- **Overlay rendering**: Cloud-Optimized GeoTIFFs (COGs) fetched by the browser via geotiff.js, with a client-side colormap applied at render time using deck.gl `BitmapLayer`.
+- **Time series (click-to-graph)**: A single Zarr v3 array on S3, range-requested by zarrita.js directly from the browser. One chunk per click (~120KB).
+- **Base map**: MapLibre GL JS with the Carto Dark Matter basemap.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Local Development
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```sh
+cp .env.example .env   # fill in VITE_DATA_BUCKET_URL, VITE_ZARR_PATH, VITE_COG_PATH
+pnpm install
+pnpm dev
+```
 
-### `npm test`
+## Deployment
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Pushes to `main` trigger the [CI/CD workflow](.github/workflows/ci-cd.yml), which:
 
-### `npm run build`
+1. Builds with `pnpm run build` (output: `dist/`)
+2. Syncs `dist/` to S3, deleting stale app files but **excluding `data/*`**
+3. Invalidates `/index.html` in CloudFront so the new build is served immediately
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Required GitHub Actions variable
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Set `CLOUDFRONT_DISTRIBUTION_ID` as a repository variable (Settings → Secrets and variables → Variables) with the CloudFront distribution ID. This is used by the invalidation step.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Cache Invalidation
 
-### `npm run eject`
+CloudFront caching is split across three behaviors:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| Path | Policy | Rationale |
+| --- | --- | --- |
+| `assets/*` | CachingOptimized (max 1yr) | Vite content-hashes filenames — safe to cache indefinitely |
+| `data/*` | CachingOptimized (max 1yr) | Long TTL is appropriate; manual invalidation is required when data is updated (see below) |
+| `/*` (default) | CachingDisabled | `index.html` must be fresh on every deploy |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### App deploy
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Handled automatically by the workflow — only `/index.html` is invalidated.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Adding new COGs
 
-## Learn More
+No invalidation needed. COG files are named by date (e.g. `nclimgrid-tavg-192501.tif`). New files have new names and are not yet cached.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Updating the Zarr store
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When new months are added to the Zarr array, all chunk files are rewritten (chunk shape is `(T, 5, 5)` where T spans the full time extent). Invalidate the entire Zarr path after updating:
 
-### Code Splitting
+```sh
+aws cloudfront create-invalidation \
+  --distribution-id <DISTRIBUTION_ID> \
+  --paths "/data/nclimgrid.zarr/*"
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Infrastructure (Terraform)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+See [terraform/README.md](terraform/README.md) for provisioning instructions.
