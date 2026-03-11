@@ -20,15 +20,12 @@ pnpm dev
 
 ## Deployment
 
-Pushes to `main` trigger the [CI/CD workflow](.github/workflows/ci-cd.yml), which:
+The [CI/CD workflow](.github/workflows/ci-cd.yml) runs on every push and pull request. On pushes to `main`, it also deploys:
 
 1. Builds with `pnpm run build` (output: `dist/`)
-2. Syncs `dist/` to S3, deleting stale app files but **excluding `data/*`**
-3. Invalidates `/index.html` in CloudFront so the new build is served immediately
-
-### Required GitHub Actions variable
-
-Set `CLOUDFRONT_DISTRIBUTION_ID` as a repository variable (Settings → Secrets and variables → Variables) with the CloudFront distribution ID. This is used by the invalidation step.
+2. Syncs `dist/assets/` to S3 with `Cache-Control: max-age=31536000,immutable` (Vite content-hashes filenames)
+3. Syncs the rest of `dist/` to S3, excluding `data/*` and `assets/*`
+4. Invalidates `/index.html` in CloudFront so the new build is served immediately
 
 ## Cache Invalidation
 
