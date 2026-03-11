@@ -34,7 +34,7 @@ https://medium.com/@walid.karray/mastering-static-website-hosting-on-aws-with-te
 
 4. Edit `terraform.tfvars` with appropriate values.
 
-4. Initialize terraform, view the plan, apply the plan.
+5. Initialize terraform, view the plan, apply the plan.
 
     ```
     terraform init
@@ -47,7 +47,3 @@ https://medium.com/@walid.karray/mastering-static-website-hosting-on-aws-with-te
     ```
     terrafrom apply
     ```
-
-
-
-

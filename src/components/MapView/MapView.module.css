@@ -1,0 +1,43 @@
+.mapContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mapContainer canvas {
+  cursor: crosshair !important;
+}
+
+.clickMarker {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+  pointer-events: none;
+}
+
+.clickMarkerDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.clickMarkerPulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  animation: pulse 1.5s ease-out 1 forwards;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0.25;
+  }
+}
