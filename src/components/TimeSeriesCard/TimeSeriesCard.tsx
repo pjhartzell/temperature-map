@@ -64,7 +64,7 @@ export default function TimeSeriesCard() {
     content = <p className={styles.emptyText}>Loading…</p>;
   } else if (!annualData) {
     content = (
-      <p className={styles.emptyText}>
+      <p className={error ? styles.errorText : styles.emptyText}>
         {error ?? 'Click anywhere on the map to view a temperature trend'}
       </p>
     );

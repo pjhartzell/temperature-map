@@ -23,6 +23,7 @@ resource "aws_cloudfront_response_headers_policy" "data_cors" {
       items = [
         "https://${var.domain_name}",
         "https://www.${var.domain_name}",
+        "http://localhost:5173",
       ]
     }
 

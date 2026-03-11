@@ -13,7 +13,6 @@ Static SPA (React + Vite + TypeScript) served via CloudFront + S3. No backend.
 ## Local Development
 
 ```sh
-cp .env.example .env   # fill in VITE_DATA_BUCKET_URL, VITE_ZARR_PATH, VITE_COG_PATH
 pnpm install
 pnpm dev
 ```

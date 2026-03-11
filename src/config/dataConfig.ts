@@ -1,15 +1,8 @@
-/** Single source of truth for all infrastructure URLs and date bounds.
- *  No other file should reference import.meta.env directly.
- */
-function requireEnv(name: string): string {
-  const val = import.meta.env[name] as string | undefined;
-  if (!val) throw new Error(`Missing required environment variable: ${name}`);
-  return val;
-}
+/** Single source of truth for all infrastructure URLs and date bounds. */
 
-export const DATA_BUCKET_URL = requireEnv('VITE_DATA_BUCKET_URL');
-export const ZARR_PATH = requireEnv('VITE_ZARR_PATH');
-export const COG_PATH = requireEnv('VITE_COG_PATH');
+export const DATA_BUCKET_URL = 'https://temperature-map.com';
+export const ZARR_PATH = 'data/nclimgrid.zarr';
+export const COG_PATH = 'data/cogs';
 
 /** nClimGrid CONUS grid dimensions in pixels. */
 export const GRID_WIDTH = 1385;

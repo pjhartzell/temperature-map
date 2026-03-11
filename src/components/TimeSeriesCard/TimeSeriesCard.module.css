@@ -30,6 +30,13 @@
   line-height: 1.5;
 }
 
+.errorText {
+  margin: 0 0 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-error);
+}
+
 .hint {
   margin: 0;
   padding-top: 0.25rem;
