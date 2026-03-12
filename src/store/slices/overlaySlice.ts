@@ -15,7 +15,7 @@ const initialState: OverlayState = {
   year: DATE_BOUNDS.endYear,
   month: DATE_BOUNDS.endMonth,
   loading: false,
-  opacity: 0.5,
+  opacity: 0.7,
   error: null,
 };
 

@@ -1,5 +1,5 @@
 .card {
-  padding: 0.875rem 1rem 1rem;
+  padding: 0.875rem 1rem;
   background-color: var(--color-bg-primary);
   border-radius: 0.375rem;
 }
@@ -98,23 +98,16 @@
 }
 
 .controls.dimmed,
-.legend.dimmed,
 .opacityRow.dimmed {
   opacity: 0.35;
   pointer-events: none;
 }
 
 .opacityRow {
-  margin-top: 0.625rem;
+  margin-top: 0.875rem;
   transition: opacity 0.15s ease;
 }
 
-.legend {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-  transition: opacity 0.15s ease;
-}
 
 .dateRow {
   display: flex;

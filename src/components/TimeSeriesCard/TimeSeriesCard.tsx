@@ -71,7 +71,7 @@ export default function TimeSeriesCard() {
   } else {
     content = (
       <div className={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height={160}>
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={annualData} margin={{ top: 4, right: 4, bottom: 4, left: 0 }}>
             <XAxis
               dataKey="year"

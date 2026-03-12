@@ -10,7 +10,7 @@
 }
 
 .headerCard {
-  padding: 0.875rem 1rem 0.75rem;
+  padding: 0.875rem 1rem;
   background-color: var(--color-bg-primary);
   border-radius: 0.375rem;
 }

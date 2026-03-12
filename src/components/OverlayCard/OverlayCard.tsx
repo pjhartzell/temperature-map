@@ -1,9 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Legend from '@/components/Legend/Legend';
 import { setEnabled, setYear, setMonth, setOpacity } from '@/store/slices/overlaySlice';
 import { getYearOptions, getMonthOptions } from '@/utils/dateHelpers';
-import { COLORMAP_MIN_TEMP_C, COLORMAP_MAX_TEMP_C } from '@/config/colormapConfig';
-import { convertTemp } from '@/utils/temperatureUtils';
 import type { AppDispatch, RootState } from '@/store/index';
 import styles from './OverlayCard.module.css';
 
@@ -13,8 +10,6 @@ const monthOptions = getMonthOptions();
 export default function OverlayCard() {
   const dispatch = useDispatch<AppDispatch>();
   const { enabled, year, month, loading, opacity, error } = useSelector((state: RootState) => state.overlay);
-  const tempUnit = useSelector((state: RootState) => state.ui.tempUnit);
-
   return (
     <section className={styles.card}>
       <div className={styles.header}>
@@ -82,13 +77,6 @@ export default function OverlayCard() {
             style={{ '--fill': `${Math.round(opacity * 100)}%` } as React.CSSProperties}
           />
         </label>
-      </div>
-      <div className={`${styles.legend} ${!enabled ? styles.dimmed : ''}`}>
-        <Legend
-          minTemp={convertTemp(COLORMAP_MIN_TEMP_C, tempUnit)}
-          maxTemp={convertTemp(COLORMAP_MAX_TEMP_C, tempUnit)}
-          unit={tempUnit}
-        />
       </div>
     </section>
   );

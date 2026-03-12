@@ -7,8 +7,8 @@
 .ramp {
   height: 0.375rem;
   border-radius: 0.125rem;
-  /* Placeholder gradient — replaced in Phase 4 with generated colormap */
   background: linear-gradient(to right, #2166ac, #f7f7f7, #d6604d);
+  box-shadow: none;
 }
 
 .labels {
@@ -16,4 +16,5 @@
   justify-content: space-between;
   font-size: 0.8125rem;
   color: var(--color-text-secondary);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
